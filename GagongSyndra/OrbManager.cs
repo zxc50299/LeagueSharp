@@ -9,7 +9,7 @@ namespace GagongSyndra
 {
     public static class OrbManager
     {
-        private static int _wobjectnetworkid = -1;
+        public static int _wobjectnetworkid = -1;
 
         public static int WObjectNetworkId
         {
@@ -39,7 +39,7 @@ namespace GagongSyndra
             return null;
         }
 
-        private static void Game_OnGameProcessPacket(GamePacketEventArgs args)
+        public static void Game_OnGameProcessPacket(GamePacketEventArgs args)
         {
             if (args.PacketData[0] == 0x71)
             {

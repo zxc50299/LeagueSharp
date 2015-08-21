@@ -12,10 +12,30 @@ namespace GagongSyndra //Credits to DZ191 for the updated
     public class xSLxOrbwalker
     {
 
-        private static readonly string[] AttackResets = { "dariusnoxiantacticsonh", "fioraflurry", "garenq", "hecarimrapidslash", "jaxempowertwo", "jaycehypercharge", "leonashieldofdaybreak", "monkeykingdoubleattack", "mordekaisermaceofspades", "nasusq", "nautiluspiercinggaze", "netherblade", "parley", "poppydevastatingblow", "powerfist", "renektonpreexecute", "rengarq", "shyvanadoubleattack", "sivirw", "takedown", "talonnoxiandiplomacy", "trundletrollsmash", "vaynetumble", "vie", "volibearq", "xenzhaocombotarget", "yorickspectral" };
-        private static readonly string[] NoAttacks = { "jarvanivcataclysmattack", "monkeykingdoubleattack", "shyvanadoubleattack", "shyvanadoubleattackdragon", "zyragraspingplantattack", "zyragraspingplantattack2", "zyragraspingplantattackfire", "zyragraspingplantattack2fire" };
-        private static readonly string[] Attacks = { "caitlynheadshotmissile", "frostarrow", "garenslash2", "kennenmegaproc", "lucianpassiveattack", "masteryidoublestrike", "quinnwenhanced", "renektonexecute", "renektonsuperexecute", "rengarnewpassivebuffdash", "trundleq", "xenzhaothrust", "viktorqbuff", "xenzhaothrust2", "xenzhaothrust3" };
+        private static readonly string[] AttackResets =
+        {
+            "dariusnoxiantacticsonh", "fioraflurry", "garenq",
+            "hecarimrapidslash", "jaxempowertwo", "jaycehypercharge", "leonashieldofdaybreak", "luciane", "lucianq",
+            "monkeykingdoubleattack", "mordekaisermaceofspades", "nasusq", "nautiluspiercinggaze", "netherblade",
+            "parley", "poppydevastatingblow", "powerfist", "renektonpreexecute", "rengarq", "shyvanadoubleattack",
+            "sivirw", "takedown", "talonnoxiandiplomacy", "trundletrollsmash", "vaynetumble", "vie", "volibearq",
+            "xenzhaocombotarget", "yorickspectral", "reksaiq"
+        };
 
+        private static readonly string[] NoAttacks =
+        {
+            "jarvanivcataclysmattack", "monkeykingdoubleattack",
+            "shyvanadoubleattack", "shyvanadoubleattackdragon", "zyragraspingplantattack", "zyragraspingplantattack2",
+            "zyragraspingplantattackfire", "zyragraspingplantattack2fire", "viktorpowertransfer", "sivirwattackbounce"
+        };
+
+        private static readonly string[] Attacks =
+        {
+            "caitlynheadshotmissile", "frostarrow", "garenslash2",
+            "kennenmegaproc", "lucianpassiveattack", "masteryidoublestrike", "quinnwenhanced", "renektonexecute",
+            "renektonsuperexecute", "rengarnewpassivebuffdash", "trundleq", "xenzhaothrust", "xenzhaothrust2",
+            "xenzhaothrust3", "viktorqbuff"
+        };
 
         public static Menu Menu;
         public static Obj_AI_Hero MyHero = ObjectManager.Player;
@@ -192,7 +212,7 @@ namespace GagongSyndra //Credits to DZ191 for the updated
 
         private static void OnUpdate(EventArgs args)
         {
-            if (CurrentMode == Mode.None || MenuGUI.IsChatOpen || CustomOrbwalkMode || MyHero.IsChannelingImportantSpell() || MyHero.HasBuff("katarinarsound", true))
+            if (CurrentMode == Mode.None || MenuGUI.IsChatOpen || CustomOrbwalkMode || MyHero.IsChannelingImportantSpell() || MyHero.HasBuff("katarinarsound"))
                 return;
             CheckAutoWindUp();
             var target = GetPossibleTarget();
@@ -245,7 +265,7 @@ namespace GagongSyndra //Credits to DZ191 for the updated
                     var attackToKill = Math.Ceiling(minion.MaxHealth / MyHero.GetAutoAttackDamage(minion, true));
                     var hpBarPosition = minion.HPBarPosition;
                     var barWidth = minion.IsMelee() ? 75 : 80;
-                    if (minion.HasBuff("turretshield", true))
+                    if (minion.HasBuff("turretshield"))
                         barWidth = 70;
                     var barDistance = (float)(barWidth / attackToKill);
                     if (Menu.Item("orb_Draw_MinionHPBar").GetValue<Circle>().Active)
@@ -308,7 +328,7 @@ namespace GagongSyndra //Credits to DZ191 for the updated
         {
             var delay = Menu.Item("orb_Misc_Humanizer").GetValue<Slider>().Value;
 
-            if ((MyHero.ChampionName == "Katarina" || MyHero.ChampionName == "Velkoz") && delay < 400 && (R.IsReady() || MyHero.Spellbook.GetSpell(SpellSlot.R).State == SpellState.Surpressed) && MyHero.CountEnemysInRange(1000) > 0)
+            if ((MyHero.ChampionName == "Katarina" || MyHero.ChampionName == "Velkoz") && delay < 400 && (R.IsReady() || MyHero.Spellbook.GetSpell(SpellSlot.R).State == SpellState.Surpressed) && MyHero.CountEnemiesInRange(1000) > 0)
             {
                 delay = 400;
             }
